@@ -51,9 +51,13 @@ def parse_company(company):
 def main():
 
     json_data = test_request()
+    company_lst = json_data['data']
 
-    for company in json_data['data']:
-        parse_company(company)
+    # Sort by most recently founded companies first
+    company_lst.sort(key=lambda x: parse_iso_native(x['created_at']), reverse=True)
+
+    for c in company_lst:
+        parse_company(c)
 
 main()
 
